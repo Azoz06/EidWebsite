@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لحظة | Lahza</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- إضافة SweetAlert2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Beiruti:wght@200..900&family=Dosis:wght@200..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Baloo Bhaijaan 2", sans-serif;
+        }
+        *::selection{
+            background-color: #2b3357;
+            color: blanchedalmond;
+        }
+        body {
+            background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            transition: 0.3s;
+        }
+        h1 {
+            font-size: 24px;
+            color: #29b64d;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .card-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .card {
+            width: 350px;
+            height: 600px;
+            background: url("") no-repeat center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: #D5B895;
+            color: #e8a87c;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
+        }
+        .name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 65%;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .download-btn {
+            background-color: #28a745;
+        }
+        .download-btn:hover {
+            background-color: #218838;
+        }
+        .edit-btn {
+            background-color: #dc3545;
+        }
+        .edit-btn:hover {
+            background-color: #b52b3a;
+        }
+
+        .alert-danger {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert {
+            position: relative;
+            padding: .75rem 1.25rem;
+            margin-bottom: 4.1rem;
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+        }
+
+        #footer-text {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            position: relative;
+            padding: .75rem 1.25rem;
+            margin-bottom: 4.1rem;
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+            margin-top: 60px;
+   
+        
+        }
+
+        .lang-switch {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 8px 15px;
+        border: none;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+    .lang-switch:hover {
+        background-color: #ddd;
+    }
+    .eid-message {
+    /* font-size: 24px; */
+    font-weight: bold;
+
+    color: #f5e1c8;
+    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.5);
+    position: relative;
+    top: 26%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 90%;
+
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        <!-- Message will be set dynamically based on language -->
+    </div>
+
+    <!-- onclick="toggleLanguage()" -->
+     <a href="/503.html">
+
+         <button class="lang-switch" id="lang-switch-button">English</button>
+     </a>
+
+    <div class="container" id="form-container">
+        <h1 id="title"></h1>
+        <input type="text" id="username" placeholder="اكتب اسمك" oninput="validateInput()" autocomplete="off" />
+        <button class="btn" onclick="generateCard()" id="submit-btn"> 🤍تـــــــم</button>
+    </div>
+    <div class="card-container" id="card-container">
+        <div id="card" class="card">
+            <p class="eid-message" id="eid-message"></p>
+            <p class="name" id="card-name"></p>
+        </div>
+        <div class="buttons">
+            <button class="btn download-btn" onclick="downloadCard()" id="download-btn">تحميل البطاقة</button>
+            <button class="btn edit-btn" onclick="editCard()" id="edit-btn">تعديل البطاقة</button>
+        </div>
+    </div>
+
+    <script>
+        let lang = localStorage.getItem("selectedLang") || (navigator.language.startsWith("ar") ? "ar" : "en");
+
+        const messages = {
+            ar: {
+                alertMessage: '. حياكم الله , موقع لحظه حاليًا في نسخته التجريبية ويحتوي على قالب واحد فقط، وبإذن الله سيتم إضافة المزيد من القوالب قريبًا. نتمنى لكم عيدًا سعيدًا     ',
+                title: ' (: ابدأ الآن واحصل على بطاقتك ',
+                placeholder: 'اكتب اسمك',
+                submitButton: '🤍 تـــــــم ',
+                downloadButton: 'تحميل البطاقة',
+                editButton: 'تعــــديل البطاقة',
+                warningTitle: 'تنبيه',
+                warningText: 'يرجى إدخال الحروف العربية فقط!',
+                successDownloadTitle: 'تم التحميل',
+                successDownloadText: 'شكرا لك تم تحميل البطاقة بنجاح نتمنى لك عيد سعيد ',
+                errorDownloadTitle: 'حدث خطأ',
+                errorDownloadText: 'لم يتم تحميل البطاقة. سبب الخطأ: ',
+                langButton: "English",
+                emptyNameWarning: "يرجى إدخال الاسم",
+                // footerText: " ❤ تم تطويره بحب من قبل عبدالعزيز "
+                footerText: " ❤ تم تطويره بشغف من قبل عبدالعزيز " ,
+                eidMessage: "أَدَامَ اللَّهُ عَلَيْكُمْ أَعْيَادَكُمْ وَجَمَعَنَا عَلَى طَاعَتِهِ فِي كُلِّ خَيْرٍ، وَتَقَبَّلَ مِنَّا وَمِنْكُمْ صَالِحَ الْأَعْمَالِ، وَجَعَلَ هَذَا العِيدَ فَرَحًا لَكُمْ وَفِي قُرُبَتِهِ سَعَادَةً وَرَحْمَةً."  // النص المطلوب للغة العربية
+            },
+            en: {
+                alertMessage: 'WelWelcome! Lahza website is currently in a beta version and includes only one template. more templates will be available soon. Wishing you a happy Eid',
+                title: ' Start now and get your card (:',
+                placeholder: 'Enter your name',
+                submitButton: 'Submit',
+                downloadButton: 'Download Card',
+                editButton: 'Edit Card',
+                warningTitle: 'Warning',
+                warningText: 'Please enter only English characters!',
+                successDownloadTitle: 'Downloaded',
+                // successDownloadText: 'Card downloaded successfully!',
+                successDownloadText: 'Thank you, The card has been successfully downloaded. We wish you a happy Eid',
+                errorDownloadTitle: 'Error',
+                errorDownloadText: 'Failed to download the card. Error: ',
+                langButton: "العربية",
+                emptyNameWarning: "Please enter your name",
+                // footerText: "programmed with passion by Abdulaziz ❤ "
+                footerText: "Developed  with passion by Abdulaziz ❤ " ,
+                eidMessage: "May Allah bless your Eid, gather us in His obedience, accept our good deeds, and make this Eid a time of joy, closeness to Him, and mercy."  // النص المطلوب للغة الإنجليزية
+
+
+            }
+        };
+
+        window.onload = function() {
+    setLanguage(); // ضبط اللغة عند تحميل الصفحة
+    setupLanguageSwitcher(); // تفعيل زر تغيير اللغة
+};
+
+function setLanguage() {
+    // الحصول على اللغة المختارة من localStorage
+    let lang = localStorage.getItem("selectedLang") || "ar"; // جعل "ar" اللغة الافتراضية دائمًا
+
+    // تحديث النصوص بناءً على اللغة
+    updatePageText(lang);
+}
+
+function updatePageText(lang) {
+    // تعيين النصوص بناءً على اللغة المختارة
+    document.getElementById('alert-message').textContent = messages[lang].alertMessage;
+    document.getElementById('title').textContent = messages[lang].title;
+    document.getElementById('username').placeholder = messages[lang].placeholder;
+    document.getElementById('submit-btn').textContent = messages[lang].submitButton;
+    document.getElementById('download-btn').textContent = messages[lang].downloadButton;
+    document.getElementById('edit-btn').textContent = messages[lang].editButton;
+    document.querySelector('.lang-switch').textContent = messages[lang].langButton;
+    document.getElementById('footer-text').textContent = messages[lang].footerText;
+    
+    // تغيير الصورة بناءً على اللغة
+    let cardElement = document.getElementById("card");
+    if (lang === "en") {
+        cardElement.style.background = "url('Eid EN.svg') no-repeat center/cover"; 
+    } else {
+        cardElement.style.background = "url('Eid AR.svg') no-repeat center/cover"; 
+    }
+    
+    document.getElementById('eid-message').textContent = messages[lang].eidMessage;
+
+// تغيير لون النص بناءً على اللغة
+if (lang === "ar") {
+    document.getElementById('eid-message').style.color = "#f5e1c8"; // لون النص للعربية
+} else {
+    document.getElementById('eid-message').style.color = "#bf643a"; // لون النص للإنجليزية
+}
+
+
+}
+
+
+
+
+
+
+function toggleLanguage() {
+    lang = lang === "ar" ? "en" : "ar"; // التبديل بين اللغة العربية والإنجليزية
+    localStorage.setItem("selectedLang", lang);
+    setLanguage(); // استدعاء الدالة لتحديث النصوص بعد التبديل
+}
+
+
+        const selectedLang = lang.startsWith('ar') ? 'ar' : 'en';
+
+        // Set dynamic text content based on language
+        document.getElementById('alert-message').textContent = messages[selectedLang].alertMessage;
+        document.getElementById('title').textContent = messages[selectedLang].title;
+        document.getElementById('username').placeholder = messages[selectedLang].placeholder;
+        document.getElementById('submit-btn').textContent = messages[selectedLang].submitButton;
+        document.getElementById('download-btn').textContent = messages[selectedLang].downloadButton;
+        document.getElementById('edit-btn').textContent = messages[selectedLang].editButton;
+
+        function validateInput() {
+    let input = document.getElementById("username").value;
+    let arabicRegex = /^[\u0600-\u06FF\s]+$/; // يسمح فقط بالأحرف العربية
+    let englishRegex = /^[A-Za-z\s]+$/; // يسمح فقط بالأحرف الإنجليزية
+
+    if (lang === "ar" && !arabicRegex.test(input)) {
+        document.getElementById("username").value = input.replace(/[^ \u0600-\u06FF]/g, '');
+        Swal.fire({
+            icon: 'warning',
+            title: messages[lang].warningTitle,
+            text: messages[lang].warningText
+        });
+    } else if (lang === "en" && !englishRegex.test(input)) {
+        document.getElementById("username").value = input.replace(/[^A-Za-z\s]/g, '');
+        Swal.fire({
+            icon: 'warning',
+            title: messages[lang].warningTitle,
+            text: messages[lang].warningText
+        });
+    }
+}
+
+
+        function generateCard() {
+            let name = document.getElementById("username").value.trim();
+            if (name === "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: messages[selectedLang].warningTitle,
+                    text: messages[lang].emptyNameWarning
+                });
+                return;
+            }
+            document.querySelector('.alert-danger').style.display = "none";
+
+            document.getElementById("card-name").textContent = name;
+            document.getElementById("form-container").style.display = "none";
+            document.getElementById("card-container").style.display = "flex";
+        }
+
+        function downloadCard() {
+            html2canvas(document.getElementById("card"), {
+                width: 350,
+                height: 600,
+            }).then((canvas) => {
+                let link = document.createElement("a");
+                link.href = canvas.toDataURL("image/png");
+                link.download = "بطاقة العيد.png";
+                link.click();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: messages[lang].successDownloadTitle,
+                    text: messages[lang].successDownloadText
+                });
+
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: messages[lang].errorDownloadTitle,
+                    text: messages[lang].errorDownloadText + error.message
+                });
+            });
+        }
+
+        function editCard() {
+            document.getElementById("form-container").style.display = "block";
+            document.getElementById("card-container").style.display = "none";
+            document.querySelector('.alert-danger').style.display = "block";
+        }
+    </script>
+
+    <!-- <footer>
+        <div class="alert alert-danger" id="fome" role="alert">
+            برمجة وتطوير احمد
+        </div>
+    </footer> -->
+    <footer>
+        <div   id="footer-text" class="footer-content">
+            <!-- سيتم تغيير هذا النص بناءً على اللغة -->
+        </div>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            background: linear-gradient(45deg, #FF6F61, #FF9A8B);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #fff;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Background Animation */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1604001717863-7db8771fbe18') no-repeat center center/cover;
+            animation: zoomInOut 15s infinite ease-in-out;
+            filter: blur(10px);
+        }
+
+        .content {
+            z-index: 10;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .status {
+            font-size: 120px;
+            font-weight: 900;
+            color: #FF5C8D;
+            text-transform: uppercase;
+            animation: bounce 1.5s infinite;
+        }
+
+        .message {
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #FFF;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .details {
+            font-size: 18px;
+            color: #e3e3e3;
+            margin-top: 15px;
+            animation: slideIn 2s ease-out;
+        }
+
+        .return-btn {
+            margin-top: 30px;
+            padding: 15px 35px;
+            background-color: #FF5C8D;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .return-btn:hover {
+            background-color: #FF416C;
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .return-btn:focus {
+            outline: none;
+        }
+
+        /* Animations */
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .status {
+                font-size: 80px;
+            }
+            .message {
+                font-size: 22px;
+            }
+            .details {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <div class="content">
+        <div class="status">503</div>
+        <div class="message">We are under maintenance</div>
+        <div class="details">
+            We apologize, this page is under development and will be available soon. This is because the site is still in beta.
+            <!-- Our website is currently undergoing maintenance. We are working hard to improve it. Please check back later. -->
+        </div>
+        <button onclick="goHome()" class="return-btn">Back to Home</button>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = '/index.html'; // Change the URL here to direct the user to the homepage
+        }
+    </script>
+
+</body>
+</html>
